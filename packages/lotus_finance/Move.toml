@@ -1,0 +1,33 @@
+[package]
+name = "lotus_finance"
+edition = "2024.beta" # edition = "legacy" to use legacy (pre-2024) Move
+license = "Apache 2.0"
+authors = ["0xhipo (0xhipo@gmail.com)"]
+version = "0.2.0"
+
+[dependencies]
+deepbook = { local = "../deepbookv3/packages/deepbook" }
+TokenDistribution = { local = "../token-distribution" }
+# Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "framework/mainnet" }
+usdc = { local = "../usdc" }
+
+[dependencies.Pyth]
+# git = "https://github.com/pyth-network/pyth-crosschain.git"
+# subdir = "target_chains/sui/contracts"
+# rev = "sui-contract-testnet"
+local = "../pyth-crosschain"
+ 
+[dependencies.Wormhole]
+# git = "https://github.com/wormhole-foundation/wormhole.git"
+# subdir = "sui/wormhole"
+# rev = "sui-upgrade-testnet"
+local = "../wormhole"
+ 
+# Pyth is locked into this specific `rev` because the package depends on Wormhole and is pinned to this version.
+[dependencies.Sui]
+git = "https://github.com/MystenLabs/sui.git"
+subdir = "crates/sui-framework/packages/sui-framework"
+rev = "framework/mainnet"
+
+[addresses]
+lotus_finance = "0x0"

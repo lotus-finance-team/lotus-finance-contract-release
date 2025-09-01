@@ -1,0 +1,13 @@
+Move.lock
+
+build/
+node_modules/
+
+.vscode
+
+.env
+
+dist/
+.DS_Store
+
+mkt/

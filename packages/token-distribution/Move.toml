@@ -1,0 +1,17 @@
+[package]
+name = "TokenDistribution"
+version = "0.1.0"
+# testnet
+published-at = "0x776f9504bba7d7f4051670e19b2dd3bf96285160a0fa187ce11386a478621ecf"
+# mainnet
+# published-at = "0xb275de9247b975ad53d3449a288032a15ac35e5e20e855bd9c5daf416bad2c13"
+
+[dependencies]
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "framework/mainnet" }
+
+[addresses]
+# token_distribution = "0x0"
+# testnet
+token_distribution = "0x776f9504bba7d7f4051670e19b2dd3bf96285160a0fa187ce11386a478621ecf"
+# mainnet
+# token_distribution = "0xb275de9247b975ad53d3449a288032a15ac35e5e20e855bd9c5daf416bad2c13"

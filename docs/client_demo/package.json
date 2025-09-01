@@ -1,0 +1,10 @@
+{
+    "dependencies": {
+        "@mysten/deepbook-v3": "^0.3.3",
+        "@mysten/sui": "^1.32.0",
+        "@mysten/sui.js": "^0.54.1",
+        "@pythnetwork/pyth-sui-js": "^2.1.0",
+        "dotenv": "^16.4.5",
+        "typescript": "5.5.4"
+    }
+}

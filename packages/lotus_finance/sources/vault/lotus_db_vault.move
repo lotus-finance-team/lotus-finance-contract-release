@@ -98,6 +98,13 @@ module lotus_finance::lotus_db_vault {
         balance_manager_id: ID,
     }
 
+    public struct DirectDepositEvent has copy, drop {
+        vault_id: ID,
+        user_address: address,
+        coin_type: TypeName,
+        amount: u64,
+    }
+
     public struct PoolingDepositEvent has copy, drop {
         vault_id: ID,
         user_address: address,
@@ -249,6 +256,12 @@ module lotus_finance::lotus_db_vault {
         to_deposit: Coin<T>,
         ctx: &TxContext,
     ) {
+        event::emit(DirectDepositEvent {
+            vault_id: object::id(self),
+            user_address: ctx.sender(),
+            coin_type: type_name::get<T>(),
+            amount: to_deposit.value(),
+        });
         self.balance_manager.deposit_with_cap(&self.deposit_cap, to_deposit, ctx);
     }
 
@@ -573,20 +586,6 @@ module lotus_finance::lotus_db_vault {
         let deep_amount_1 = self.get_total_balance<LP, DEEP, Base, Quote>(pool);
         // Withdraw coins into self.incentive_acc
         pool.withdraw_settled_amounts<Base, Quote>(&mut self.balance_manager, &trade_proof);
-        if (base_amount_1 > base_amount_0) {
-            let base_coin = self.balance_manager.withdraw_with_cap<Base>(&self.withdraw_cap, base_amount_1 - base_amount_0, ctx);
-            self.incentive_acc.top_up(base_coin.into_balance());
-        };
-        if (quote_amount_1 > quote_amount_0) {
-            let quote_coin = self.balance_manager.withdraw_with_cap<Quote>(&self.withdraw_cap, quote_amount_1 - quote_amount_0, ctx);
-            self.incentive_acc.top_up(quote_coin.into_balance());
-        };
-        if (type_name::get<Base>() != type_name::get<DEEP>() && type_name::get<Quote>() != type_name::get<DEEP>()) {
-            if (deep_amount_1 > deep_amount_0) {
-                let deep_coin = self.balance_manager.withdraw_with_cap<DEEP>(&self.withdraw_cap, deep_amount_1 - deep_amount_0, ctx);
-                self.incentive_acc.top_up(deep_coin.into_balance());
-            }
-        };
 
         // Base and Quote are not DEEP. Otherwise there's no fee nor rebate.
         event::emit(ClaimRebateEvent {

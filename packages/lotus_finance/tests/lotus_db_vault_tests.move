@@ -1,7 +1,8 @@
 module lotus_finance::lotus_db_vault_tests {
     use std::debug;
+    use sui::sui::SUI;
     use sui::address::{Self};
-    use sui::coin::{Self, Coin};
+    use sui::coin::{Self, Coin, mint_for_testing};
     use sui::clock::{Self, Clock};
     use sui::test_scenario::{Self,Scenario, begin, end};
     use lotus_finance::lotus_db_vault::{Self, LotusDBVault, LotusDBVaultCap};
@@ -38,6 +39,9 @@ module lotus_finance::lotus_db_vault_tests {
             let mut vault = test.take_shared_by_id<LotusDBVault<LOTUS_DB_VAULT_TESTS>>(vault_id);
             // Test mint lotus cap
             // let trade_cap = vault.mint_lotus_trade_cap<LOTUS_DB_VAULT_TESTS>(&vault_cap, test.ctx());
+            // Test deposit
+            let deposit_coin = mint_for_testing<SUI>(1_000_000, test.ctx());
+            vault.deposit<SUI, LOTUS_DB_VAULT_TESTS>(deposit_coin, test.ctx());
 
             test_scenario::return_shared(vault);
         };

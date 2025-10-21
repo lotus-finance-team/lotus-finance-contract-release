@@ -6,7 +6,7 @@ module lotus_finance::consts {
 
     //// ====== Constants ====== ////
     /// Protocol
-    const CURRENT_VERSION: u64 = 1;
+    const CURRENT_VERSION: u64 = 2;
     const EARLY_WITHDRAWAL_TIMEOUT: u64 = 1000 * 60 * 60 * 24; // 1 day in milliseconds
 
     /// --- Oracle --- ///
